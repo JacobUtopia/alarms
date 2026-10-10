@@ -12,20 +12,25 @@ Daily Telegram withdrawal reminders. Three alerts per day to the TELEGRAM WITHDR
 
 ## Telegram
 
-- **Bot token**: in `.env` (TELEGRAM_BOT_TOKEN)
+- **Bot token**: env var TELEGRAM_BOT_TOKEN (set in Coolify)
 - **Group**: TELEGRAM WITHDRAWALS
-- **Chat ID**: `-5460249402` (in `.env` as TELEGRAM_CHAT_ID)
+- **Chat ID**: env var TELEGRAM_CHAT_ID (set in Coolify)
 
 ## Files
 
-- `withdraw-reminder.sh`: the script that sends the reminder. Reads `.env`, picks the right label based on hour, sends via Telegram Bot API.
-- `.env`: bot token and chat ID. Not committed anywhere.
+- `withdraw-reminder.sh`: the script that sends the reminder. Picks the right label based on hour, sends via Telegram Bot API.
+- `Dockerfile`: Alpine + Python 3, runs crond in foreground.
+- `crontab`: cron schedule for the container (09:00, 10:00, 11:00 UTC).
+- `.env`: local dev only (not committed). Coolify injects env vars in prod.
+- `.gitignore`: excludes .env.
 
-## How it runs
+## Hosting
 
-- **Cron on Jacob's Mac** (user crontab): `0 9,10,11 * * * /Users/andreiiacob/Documents/Claude/UTOPIA/ALARMS/withdraw-reminder.sh`
-- Requires the Mac to be on and awake at those times.
-- Not on Hetzner (yet). Can be moved there if needed.
+- **Hetzner box**: 23.88.36.185 (same as ig-ops)
+- **Coolify project**: alarms (UUID: hkpctmhfyre1e0c856eqi85h)
+- **Coolify app**: alarms (UUID: j5fgzkmpezhqis5xnjlphd7c)
+- **GitHub repo**: JacobUtopia/alarms (public)
+- Auto-deploys on push to main.
 
 ## Created
 
